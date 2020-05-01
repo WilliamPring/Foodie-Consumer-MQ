@@ -1,0 +1,46 @@
+{
+  "name": "images-consumer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "better-npm-run start:dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/register": "^7.9.0",
+    "amqplib": "^0.5.5",
+    "aws-sdk": "^2.667.0",
+    "better-npm-run": "^0.1.1",
+    "config": "^3.3.1",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.20.2",
+    "jest": "^25.5.3",
+    "nodemon": "^2.0.3"
+  },
+  "betterScripts": {
+    "start:dev": {
+      "command": "nodemon --watch src --watch config index.js",
+      "env": {
+        "NODE_ENV": "dev",
+        "PORT": 3004
+      }
+    },
+    "start:prod": {
+      "command": "nodemon --watch src --watch config index.js",
+      "env": {
+        "NODE_ENV": "dev",
+        "PORT": 3004
+      }
+    }
+  }
+}
