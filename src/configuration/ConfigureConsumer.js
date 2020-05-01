@@ -22,7 +22,7 @@ class ConfigureConsumer {
                     logger.info('@ConfigureConsumer exchange: %s queue: %s', exchange, name)
                     channel.bindQueue(q.queue, exchange, '#');
                     channel.consume(q.queue, (msg) => {
-                        console.log('message received')
+                        logger.info('@Consumer Request with topic: %s', topic.image)
                     }, { noAck: true  });
                 });
             })
