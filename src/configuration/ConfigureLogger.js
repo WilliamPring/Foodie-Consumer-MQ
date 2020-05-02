@@ -18,6 +18,6 @@ export default class ConfigureLogger {
         this.template = winston.createLogger(loggerConfig)
     }
     get logger() {
-        return this.template;
+        return this.template
     }
 }

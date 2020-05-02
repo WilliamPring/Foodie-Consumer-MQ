@@ -1,6 +1,7 @@
 import { connect } from 'amqplib/callback_api'
 import config  from 'config'
 import {logger} from '.'
+import {uploadImage} from '../common/utils'
 class ConfigureConsumer {
     constructor() {
         this._config = config.get('Queue')
@@ -23,6 +24,7 @@ class ConfigureConsumer {
                     channel.bindQueue(q.queue, exchange, '#');
                     channel.consume(q.queue, (msg) => {
                         logger.info('@Consumer Request with topic: %s', topic.image)
+                        uploadImage(msg.content, msg.properties.headers)
                     }, { noAck: true  });
                 });
             })
