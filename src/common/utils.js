@@ -1,7 +1,17 @@
 import config from 'config'
 import {s3} from '../configuration'
+import axios from 'axios'
+import https from 'https'
+import {createImage} from '../query/index'
+import moment from 'moment'
+export const apiClient = axios.create({
+    httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+    })
+})
 
-export const uploadImage = (imageBuffer, {name, mimetype, userName, reviewId, restaurantLocation, restaurantName }) => {
+
+export const uploadImage = async (imageBuffer, {name, mimetype, userName, reviewId, restaurantLocation, restaurantName }) => {
     const bucketName = config.S3Bucket.bucketName;
     const path = `users/${userName}/${restaurantName}-${restaurantLocation}/${reviewId}/images/${name}`
     console.log(path)
@@ -13,12 +23,26 @@ export const uploadImage = (imageBuffer, {name, mimetype, userName, reviewId, re
     };
     console.log(path)
     console.log(params)
-//   https://foodie-s3.s3.amazonaws.com/Latias_M05.png
-    s3.upload(params, function(err, data) {
-        if (err) {
-            throw err;
-        }
-        //basic logic for neo4j to insert later
-        console.log(`File uploaded successfully. ${data.Location}`);
-    });
+//
+try {
+    const input = {
+        reviewId: reviewId,
+        takeAt: moment().format("YYYY-MM-DD"),
+        url: "https://foodie-s3.s3.amazonaws.com/a.png"
+    }
+    const imageData = await createImage(input)
+    console.log(imageData)
+
+
+} catch(e) {
+    console.log(e)
+}
+    // s3.upload(params, async function(err, data) {
+    //     if (err) {
+    //         throw err;
+    //     }
+    //     //
+    //     //basic logic for neo4j to insert later
+    //     console.log(`File uploaded successfully. ${data.Location}`);
+    // });
 }
