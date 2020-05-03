@@ -15,11 +15,11 @@ mutation($input: ImageInput!) {
 
 
 const createImage = (input) => apiClient
-        .post(graphqlUrl, {
-            query: createReviewImage,
-            variables: {
-              input
-            }
-        }).then(({data}) => get(data, 'data.CreateReviewImage', null))
+  .post(graphqlUrl, {
+      query: createReviewImage,
+      variables: {
+        input
+      }
+  }).then(({data}) => get(data, 'data.CreateReviewImage', null))
 
 export default createImage;

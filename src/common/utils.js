@@ -25,24 +25,25 @@ export const uploadImage = async (imageBuffer, {name, mimetype, userName, review
     console.log(params)
 //
 try {
-    const input = {
-        reviewId: reviewId,
-        takeAt: moment().format("YYYY-MM-DD"),
-        url: "https://foodie-s3.s3.amazonaws.com/a.png"
-    }
-    const imageData = await createImage(input)
-    console.log(imageData)
 
+    s3.upload(params, async function(err, data) {
+        if (err) {
+            throw err;
+        }
+
+        const input = {
+            reviewId: reviewId,
+            takeAt: moment().format("YYYY-MM-DD"),
+            url: data.Location
+        }
+        const imageData = await createImage(input)
+        console.log(imageData)
+        //basic logic for neo4j to insert later
+        console.log(`File uploaded successfully. ${data.Location}`);
+    });
 
 } catch(e) {
     console.log(e)
 }
-    // s3.upload(params, async function(err, data) {
-    //     if (err) {
-    //         throw err;
-    //     }
-    //     //
-    //     //basic logic for neo4j to insert later
-    //     console.log(`File uploaded successfully. ${data.Location}`);
-    // });
+
 }
